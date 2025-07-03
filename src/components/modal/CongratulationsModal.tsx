@@ -1,6 +1,11 @@
+'use client';
+
 import React, { useMemo } from 'react';
-import Modal from '../common/Modal';
+import Modal from '@/components/common/Modal';
 import { countries } from '@/data/country';
+import { useRouter } from 'next/navigation';
+import classNames from 'classnames';
+import Button from '@/components/common/Button';
 
 interface CongratulationsModal {
   quizScore: number;
@@ -15,15 +20,19 @@ const CongratulationsModal = ({
   onUnlockCountry,
   onClose
 }: CongratulationsModal) => {
+  const router = useRouter();
   const remainingLockedCountries = useMemo(
     () => countries.filter(country => !unlockedCountries.includes(country.id)),
     [unlockedCountries]
   );
-
-  console.log(remainingLockedCountries);
+  const handleContinueButtonClick = () => {
+    onClose();
+    if (remainingLockedCountries.length === 0) {
+      router.push('/game-over');
+    }
+  };
   const handleUnlock = (countryId: number) => {
     onUnlockCountry(countryId);
-    onClose();
   };
   return (
     <Modal setCloseButtonClick={onClose}>
@@ -31,7 +40,7 @@ const CongratulationsModal = ({
         <h2 className="text-4xl font-extrabold text-green-700 mb-4 font-inter">
           Congratulations! 🎉
         </h2>
-        <p className="text-xl text-gray-800 mb-6 font-inter">
+        <p className="text-xl text-gray-800 mb-2 font-inter">
           You scored{' '}
           <span className="font-bold text-green-600">
             {quizScore.toFixed(0)}%
@@ -41,18 +50,17 @@ const CongratulationsModal = ({
 
         {remainingLockedCountries.length > 0 ? (
           <>
-            <p className="text-lg text-gray-700 mb-4 font-inter">
+            <p className="text-lg text-gray-700 mb-6 font-inter">
               Choose a new country to unlock:
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+            <div className="flex flex-wrap justify-center items-center gap-3">
               {remainingLockedCountries.map(country => (
-                <button
+                <Button
                   key={country.id}
+                  title={country.name}
+                  className="group hover:scale-105 uppercase font-press-start !bg-red-600 !border-red-600 hover:!border-green-600 hover:!bg-green-600"
                   onClick={() => handleUnlock(country.id)}
-                  className="bg-purple-500 hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-lg text-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 font-inter"
-                >
-                  {country.name}
-                </button>
+                />
               ))}
             </div>
           </>
@@ -61,12 +69,14 @@ const CongratulationsModal = ({
             You've unlocked all available countries! Great job!
           </p>
         )}
-        <button
-          onClick={onClose}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-xl shadow-md transition duration-300 ease-in-out transform hover:scale-105 font-inter"
-        >
-          Continue Game
-        </button>
+
+        <div className='flex justify-center mt-6'>
+          <Button
+            title="Continue Game"
+            className="group hover:scale-105 uppercase font-press-start"
+            onClick={handleContinueButtonClick}
+          />
+        </div>
       </div>
     </Modal>
   );

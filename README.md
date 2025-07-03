@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌍 PharmaQuest — A Medicine-Based Geography Quiz Game
 
-## Getting Started
+PharmaQuest is an educational web-based adventure game built with **Next.js** and **TypeScript**. Players explore a world map, visit various countries, and solve medicine-related quizzes to unlock new regions and earn XP. Designed to promote global health awareness and geography knowledge, the game offers a fun and interactive way to learn about medicines and diseases around the world.
 
-First, run the development server:
+---
+
+## 🚀 Features
+
+- 🌐 Interactive world map with six countries: Bangladesh, Japan, Australia, Sweden, Spain, and England.
+- 🔒 Locked countries that require completing previous challenges to unlock.
+- 🧠 3–5 multiple-choice medicine-related questions per country.
+- 🏆 Players must score **80% or higher** to unlock the next country.
+- 💾 Progress and scores are saved using **Local Storage**.
+- 🎮 Intuitive and clean game flow: Home → Quiz Adventure → Game Over.
+
+---
+
+## 🧩 Game Flow
+
+### ✅ Home Page
+- Welcomes player with a "Start" button.
+- Asks for the player's name.
+
+### 🌍 Game Page
+- Displays the world map with country pins.
+- Shows player’s name and score.
+- Locked countries show a modal when clicked.
+- Unlocked countries open a quiz modal.
+- On quiz completion:
+  - If score ≥ 80%, the user unlocks one new country.
+  - If score < 80%, the player can retry later.
+
+### ❌ Game Over Page
+- Shown when all countries are completed.
+- Displays final score.
+- Option to restart from Home.
+
+---
+
+## 🛠️ Technologies Used
+
+| Tech              | Description                                |
+|------------------|--------------------------------------------|
+| [Next.js](https://nextjs.org/) | React framework for server/client rendering |
+| [TypeScript](https://www.typescriptlang.org/) | Typed superset of JavaScript         |
+| [Tailwind CSS](https://tailwindcss.com/) | Utility-first CSS framework           |
+| LocalStorage      | For saving player progress and score       |
+
+---
+
+## 🧰 Tools & Libraries
+
+| Library | Purpose |
+|--------|---------|
+| [`mapbox-gl`](https://github.com/mapbox/mapbox-gl-js) | Interactive globe and map rendering |
+| [`lottie-web`](https://github.com/airbnb/lottie-web) | Lightweight animations using JSON |
+| [`classnames`](https://github.com/JedWatson/classnames) | Conditional class name management |
+| [`react-simple-typewriter`](https://github.com/alan2207/react-simple-typewriter) | Typewriter effect in React components |
+| [`tailwind-merge`](https://github.com/dcastil/tailwind-merge) | Utility to intelligently merge Tailwind CSS class strings |
+
+---
+
+## 📂 Folder Structure (Simplified)
+
+pharmaquest/
+|-src/
+|  |- app
+|  ├── components/
+|  ├── data/
+├── public/
+|--next.config.ts
+|-- package.json
+|-- pnpm-lock.yaml
+|-- postcss.config.mjs
+|── README.md
+|-- tsconfig.json
+
+
+## 🧪 How to Run the Project
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/Sajal13/pharma_quest.git
+cd pharmaquest
+```
+### 2. Install dependencies
+```bash
+  pnpm i
+```
+### 3. Run the development server
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+  pnpm run dev
+
 ```
+### 4. .env variables update
+update the env variables in map.
+### 5. Open in browser
+Visit http://localhost:3000 to play the game.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

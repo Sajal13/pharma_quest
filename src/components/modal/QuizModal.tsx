@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react';
 import { quizItems } from '@/data/quizQuestions';
 import { countries } from '@/data/country';
 import Modal from '../common/Modal';
+import Button from '../common/Button';
 
 interface QuizModalProps {
   countryId: number;
@@ -61,8 +62,8 @@ const QuizModal = ({ countryId, onQuizComplete, onClose }: QuizModalProps) => {
       setShowFeedback(false);
       setCurrentQuestionIndex(prev => prev + 1);
     } else {
-      // ✅ Final question submitted
       const finalScore = (newCorrectCount / quizQuestions.length) * 100;
+      console.log(finalScore);
       setCorrectAnswersCount(newCorrectCount);
       setIsQuizSubmitted(true);
       onQuizComplete(finalScore >= 80, finalScore, countryId);
@@ -71,7 +72,7 @@ const QuizModal = ({ countryId, onQuizComplete, onClose }: QuizModalProps) => {
 
   return (
     <Modal setCloseButtonClick={onClose}>
-      <h2 className="text-3xl font-bold text-blue-700 mb-6 font-inter text-center">
+      <h2 className="text-2xl lg:text-3xl font-bold text-blue-700 mb-6 font-inter text-center">
         Quiz for {countries.find(c => c.id === countryId)?.name}
       </h2>
 
@@ -89,7 +90,7 @@ const QuizModal = ({ countryId, onQuizComplete, onClose }: QuizModalProps) => {
               <button
                 key={index}
                 onClick={() => handleAnswerSelect(option)}
-                className={`p-3 rounded-lg border-2 text-left text-lg font-inter transition duration-200 ease-in-out
+                className={`px-3 py-2 cursor-pointer rounded-lg border-1 text-left text-lg font-inter transition duration-200 ease-in-out
                   ${
                     selectedAnswer === option
                       ? 'bg-blue-200 border-blue-500 text-blue-800 shadow-md'
@@ -102,19 +103,21 @@ const QuizModal = ({ countryId, onQuizComplete, onClose }: QuizModalProps) => {
           </div>
 
           {showFeedback && !selectedAnswer && (
-            <p className="text-red-500 text-md mb-4 font-inter">
+            <p className="text-red-500 text-md mb-6 font-inter">
               Please select an answer before proceeding.
             </p>
           )}
-
-          <button
-            onClick={handleNextQuestion}
-            className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg text-xl shadow-md transition duration-300 ease-in-out transform hover:scale-105 font-inter"
-          >
-            {currentQuestionIndex < quizQuestions.length - 1
-              ? 'Next Question'
-              : 'Submit Quiz'}
-          </button>
+          <div className="flex justify-center">
+            <Button
+              title={
+                currentQuestionIndex < quizQuestions.length - 1
+                  ? 'Next Question'
+                  : 'Submit Quiz'
+              }
+              className="group hover:scale-105 uppercase font-press-start"
+              onClick={handleNextQuestion}
+            />
+          </div>
         </>
       ) : (
         <div className="text-center">
@@ -125,12 +128,15 @@ const QuizModal = ({ countryId, onQuizComplete, onClose }: QuizModalProps) => {
             You answered {correctAnswersCount} out of {quizQuestions.length}{' '}
             questions correctly.
           </p>
-          <button
+          <Button
+            title={
+              currentQuestionIndex < quizQuestions.length - 1
+                ? 'Next Question'
+                : 'Submit Quiz'
+            }
+            className="group hover:scale-105 uppercase font-press-start"
             onClick={onClose}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg text-xl shadow-md transition duration-300 ease-in-out transform hover:scale-105 font-inter"
-          >
-            Continue
-          </button>
+          />
         </div>
       )}
     </Modal>

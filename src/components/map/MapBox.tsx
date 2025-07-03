@@ -5,6 +5,9 @@ import { countries, CountryData } from '@/data/country';
 import mapboxgl, { Map, Marker } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import classNames from 'classnames';
+import { useRouter } from 'next/navigation';
+import Button from '../common/Button';
+import { FaArrowLeftLong } from 'react-icons/fa6';
 
 interface MapBoxProps {
   playerName: string;
@@ -21,6 +24,7 @@ const MapBox = ({
   currentCountryToComplete,
   onCountryButtonClick
 }: MapBoxProps) => {
+  const router = useRouter();
   const mapContainer = useRef<HTMLDivElement | null>(null);
   const map = useRef<Map | null>(null);
   const markers = useRef<Record<string, Marker>>({});
@@ -36,6 +40,7 @@ const MapBox = ({
       const isLocked = !unlockCountries.includes(country.id);
       const isCurrent = country.id === currentCountryToComplete;
       const isCompleted = unlockCountries.includes(country.id);
+
 
       const el = document.createElement('button');
       el.type = 'button';
@@ -67,10 +72,10 @@ const MapBox = ({
     if (country && map.current) {
       map.current.flyTo({
         center: country.coordinates,
-        zoom: 4, // Optional zoom level
-        essential: true, // Ensures the transition is smooth
-        speed: 1.2, // Speed of the flight
-        curve: 1.2 // Curvature of the fly animation
+        zoom: 2.7,
+        essential: true,
+        speed: 1.2,
+        curve: 1.2
       });
     }
   }, []);
@@ -120,13 +125,27 @@ const MapBox = ({
 
   return (
     <div className="relative w-full h-screen">
-      <div className="absolute top-0  right-0 p-4  bg-opacity-90 z-10  rounded-b-xl">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-3">
-          Name: <span className="font-press-start text-blue-700 capitalize">{playerName}!</span>
-        </h2>
-        <span className="text-2xl font-bold text-gray-800 flex items-center gap-3">
-          Score: <span className="font-press-start text-blue-700">{score} XP💥</span>
-        </span>
+      <div className="absolute top-0 left-0  right-0 p-4  bg-opacity-90 z-10  rounded-b-xl flex justify-between items-center">
+        <Button
+          title="Go Back"
+          className="group hover:scale-105 uppercase font-press-start"
+          startIcon={
+            <FaArrowLeftLong className="group-hover:-translate-x-1 transition-all ease-linear duration-200" />
+          }
+          onClick={() => router.push('/')}
+        />
+        <div className="bg-gray-300/60 backdrop-blur-xs p-4 rounded-lg">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2 flex items-center gap-3">
+            Name:{' '}
+            <span className="font-press-start text-blue-700 capitalize">
+              {playerName}!
+            </span>
+          </h2>
+          <span className="text-2xl font-bold text-gray-800 flex items-center gap-3">
+            Score:{' '}
+            <span className="font-press-start text-blue-700">{score} XP💥</span>
+          </span>
+        </div>
       </div>
       <div ref={mapContainer} className="w-full h-full" />
     </div>
