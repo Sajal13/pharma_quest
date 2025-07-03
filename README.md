@@ -32,7 +32,6 @@ PharmaQuest is an educational web-based adventure game built with **Next.js** an
 
 ### ❌ Game Over Page
 - Shown when all countries are completed.
-- Displays final score.
 - Option to restart from Home.
 
 ---
