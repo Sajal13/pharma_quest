@@ -61,7 +61,7 @@ PharmaQuest is an educational web-based adventure game built with **Next.js** an
 ---
 
 ## 📂 Folder Structure (Simplified)
-
+```js
 pharmaquest/
 |-src/
 |  |- app
@@ -74,6 +74,7 @@ pharmaquest/
 |-- postcss.config.mjs
 |── README.md
 |-- tsconfig.json
+```
 
 
 ## 🧪 How to Run the Project
